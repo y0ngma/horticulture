@@ -11,7 +11,6 @@
 
 ## 구축데이터정보
 ### 데이터 구성
-<img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/2024-02-06_dataset_info.png" title="cf"/>
 
 #### 이미지분류 모델
 | LrgCat | MidCat | SmlCat    | classID | train  | val   | test  | total  |
