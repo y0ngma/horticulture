@@ -11,6 +11,8 @@
 
 ## 구축데이터정보
 ### 데이터 구성
+<img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/2024-02-06_dataset_info.png" title="cf"/>
+
 #### 이미지분류 모델
 | LrgCat | MidCat | SmlCat    | classID | train  | val   | test  | total  |
 |--------|--------|-----------|---------|--------|-------|-------|--------|
@@ -113,7 +115,7 @@
 
 #### 모델 목적
 - 식물 이미지를 통해 식물 종 분류
-<img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/test_result/4_cf_matrix.png" width="800px" height="800px" title="cf"/>
+<img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/test_result/4_cf_matrix.png" width="500px" height="500px" title="cf"/>
 
 #### 평가 지표
 - F1-점수
