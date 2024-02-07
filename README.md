@@ -103,7 +103,7 @@
 ```
 
 -----------------------------------------------------------------------------
-<img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/test_result/4_cf_matrix.png" width="800px" height="800px" title="cf"/>
+<img src="https://github.com/y0ngma/horticulture/tree/main/readme_insert_files/test_result/4_cf_matrix.png" width="800px" height="800px" title="cf"/>
 
 ## 모델사용설명서
 - 모델별 상세 설명
@@ -112,7 +112,7 @@
 - 식물 이미지를 통해 식물 종 분류
 #### 평가 지표
 - F1-점수
-    <img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/criteria_classify.png" title="cf"/>
+    - <img src="https://github.com/y0ngma/horticulture/tree/main/readme_insert_files/criteria_classify.png" width="300px" height="50px" title="cf"/>
 #### 모델 버전
 - 2.0
 #### 학습 알고리즘 및 프레임워크
@@ -140,7 +140,7 @@
 - 식물 센서 데이터를 통해 생장 예측
 #### 평가 지표
 - Mean Absolute Percentage Error(평균절대비율오차)
-    <img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/criteria_predict.png" title="cf"/>
+    - <img src="https://github.com/y0ngma/horticulture/tree/main/readme_insert_files/criteria_predict.png" width="300px" height="50px" title="cf"/>
 #### 모델 버전
 - 1.0
 #### 학습 알고리즘 및 프레임워크
