@@ -51,72 +51,80 @@
 | B.관상수  | 3.습생식물 | 15.디펜바키아  | B-3-15  | 30317  | 0     | 0     | 30317  |
 | --     | --     | --        | --      | 400715 | 42758 | 51886 | 495359 |
 
+
 ### 폴더 구성
 - 모델별, 분할된 데이터 별 폴더구조는 대동소이 하며 예시는 다음과 같다. 
-```bash
-# 전체 구조 예시(식물 이미지 분류 모델의 테스트셋 기준)
-이미지분류/
-├── train
-│   └──...
-├── val
-│   └──...
-└── test
-    ├── 라벨링데이터
+    ```bash
+    # 전체 구조 예시(식물 이미지 분류 모델의 테스트셋 기준)
+    이미지분류/
+    ├── train
     │   └──...
-    └── 이미지데이터
-        ├── A.화초
-        │   ├── 1.건생식물
-        │   │   ├── 01.스투키
-        │   │   ├── 02.선인장
-        │   │   └── 03.금전수
-        │   ├── 2.중생식물
-        │   │   ├── 04.테이블야자
-        │   │   ├── 05.홍콩야자
-        │   │   ├── 06.호접란
-        │   │   └── 07.스파티필럼
-        │   ├── 3.습생식물
-        │   │   ├── 08.보스턴고사리
-        │   │   └── 09.몬스테라
-        │   └── 4.수생식물
-        │       └── 10.부레옥잠
-        └── B.관상수
-            ├── 1.건생식물
-            │   └── 11.올리브나무
-            ├── 2.중생식물
-            │   ├── 12.오렌지쟈스민
-            │   └── 13.관음죽
-            └── 3.습생식물
-                ├── 14.벵갈고무나무
-                └── 15.디펜바키아
-                    ├── N50-B-3-15-B-1-H-230825-000132.jpg
-                    ...
-                    └── N50-B-3-15-L-3-V-231018-000890.jpg
+    ├── val
+    │   └──...
+    └── test
+        ├── 라벨링데이터
+        │   └──...
+        └── 이미지데이터
+            ├── A.화초
+            │   ├── 1.건생식물
+            │   │   ├── 01.스투키
+            │   │   ├── 02.선인장
+            │   │   └── 03.금전수
+            │   ├── 2.중생식물
+            │   │   ├── 04.테이블야자
+            │   │   ├── 05.홍콩야자
+            │   │   ├── 06.호접란
+            │   │   └── 07.스파티필럼
+            │   ├── 3.습생식물
+            │   │   ├── 08.보스턴고사리
+            │   │   └── 09.몬스테라
+            │   └── 4.수생식물
+            │       └── 10.부레옥잠
+            └── B.관상수
+                ├── 1.건생식물
+                │   └── 11.올리브나무
+                ├── 2.중생식물
+                │   ├── 12.오렌지쟈스민
+                │   └── 13.관음죽
+                └── 3.습생식물
+                    ├── 14.벵갈고무나무
+                    └── 15.디펜바키아
+                        ├── N50-B-3-15-B-1-H-230825-000132.jpg
+                        ...
+                        └── N50-B-3-15-L-3-V-231018-000890.jpg
 
-# 폴더 깊이별 구성 폴더 규칙 다음과 같다
-<모델명>/
-└── <데이터분할명>
-    └── <데이터종류>
-        └── <대분류>
-            └── <중분류>
-                └── <소분류>
-                    └── <파일명>
-```
+    # 폴더 깊이별 구성 폴더 규칙 다음과 같다
+    <모델명>/
+    └── <데이터분할명>
+        └── <데이터종류>
+            └── <대분류>
+                └── <중분류>
+                    └── <소분류>
+                        └── <파일명>
+    ```
 
 -----------------------------------------------------------------------------
-<img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/test_result/4_cf_matrix.png" width="800px" height="800px" title="cf"/>
 
 ## 모델사용설명서
 - 모델별 상세 설명
+
+
 ### 식물 이미지 분류
+
 #### 모델 목적
 - 식물 이미지를 통해 식물 종 분류
+<img src="https://github.com/y0ngma/VirtualMachine/blob/main/horticulture/readme_insert_files/test_result/4_cf_matrix.png" width="800px" height="800px" title="cf"/>
+
 #### 평가 지표
 - F1-점수
-    - <img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/criteria_classify.png" width="300px" height="50px" title="cf"/>
+    <img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/criteria_classify.png" title="이미지분류 평가지표"/>
+
 #### 모델 버전
 - 2.0
+
 #### 학습 알고리즘 및 프레임워크
 - PolyNet, PyTorch, Scikit-Learn
+
 #### 학습 조건
 * Image Data Generator
     - rescale: 1./255  #픽셀 값을 0과 1 사이로 정규화
@@ -135,16 +143,22 @@
     - epoch: 1
     - learning_rate: 0.0004
 
+
 ### 식물 생장 예측
+
 #### 모델 목적
 - 식물 센서 데이터를 통해 생장 예측
+
 #### 평가 지표
 - Mean Absolute Percentage Error(평균절대비율오차)
-    - <img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/criteria_predict.png" width="300px" height="50px" title="cf"/>
+    <img src="https://github.com/y0ngma/horticulture/blob/main/readme_insert_files/criteria_predict.png" title="생장예측 평가지표"/>
+
 #### 모델 버전
 - 1.0
+
 #### 학습 알고리즘 및 프레임워크
 - RandomForest, PyTorch, Scikit-Learn
+
 #### 학습 조건
 * RandomForest 파라미터 범위
     - 'n_estimators': [100, 200],
@@ -155,7 +169,9 @@
     - n-jobs=-1 (모든 코어 사용)
     - cv=3 (교차검증을 위한 fold 수)
 
+
 ### 모델 소스 코드 설명
+
 - 도커 구동시 루트경로에 다음과 같은 소스코드 및 각종 파일 확인가능
     ```
     (docker container 내부)
@@ -193,6 +209,7 @@
 -----------------------------------------------------------------------------
 
 ## 환경설치가이드
+
 ### 개발 시스템 환경
 1. 하드웨어 정보
 
@@ -215,8 +232,11 @@
         - scikit-learn==0.24.2
         - numpy==1.23.2
 
+
 ### 환경 구축 방법
+
 - Dockerfile 과 docker-compose.yaml 파일을 기반하여 직접 이미지를 생성
+
 #### 1. 데이터셋 등 마운트 경로 설정
 - docker-compose.yml 파일내에 마운트하고자 하는 로컬경로 수정
 - `< ~ 로컬경로>` 부분을 자유롭게 수정하여 사용합니다.
@@ -321,6 +341,7 @@
     # 도커 컨테이너 삭제
     docker rm <컨테이너명 또는 CONTAINER ID>
     ```
+
 
 ## License
 Copyright (c) 2023 Gnewsoft SPDX-License-Identifier: MIT
