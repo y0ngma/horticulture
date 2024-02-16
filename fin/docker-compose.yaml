@@ -1,0 +1,23 @@
+version: '3.1'
+
+services:
+  horticulture:
+    container_name: horticulture_container
+    restart: always
+    ipc: host
+    build:
+      context: .
+    volumes:
+      # - <로컬경로>:<컨테이너 내 경로>
+      # <로컬경로> 부분은 자유롭게 수정하여 사용합니다.
+      - /home/lab/home/VirtualMachine/horticulture/fin/src:/app
+      - /mnt/nia50/final_output:/mnt/output
+      - /mnt/nia50/final:/mnt/dataset
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+          cpus: "0.9"
