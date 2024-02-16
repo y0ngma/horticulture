@@ -1,5 +1,7 @@
 # 원예식물 화분류 물주기 수분공급 주기 생육데이터
-
+- 인공지능 학습을 통해 최적의 주거 환경(다세대주택 등)에서의 원예식물의 상태(잎, 줄기, 뿌리 등)를 포함한 물주기(수분공급)의 데이터셋을 구축
+    - 원예식물 물주기 최적화와 생육 상태 탐지 및 생육 예측이 가능하도록 알고리즘 설계 및 데이터베이스 구축
+    
 ## 목차
 1. [구축데이터정보](#구축데이터정보)
 1. [모델사용설명서](#모델사용설명서)
@@ -10,7 +12,25 @@
 -----------------------------------------------------------------------------
 
 ## 구축데이터정보
-### 데이터 구성
+- 파일명 구성 정보
+    - 예시 파일명 : 
+        - N50-B-3-15-L-3-V-230507-001041.json
+
+        |순서|분류|정보|비고|
+        |--|--|--|--|
+        |1|세부과제ID|50.원예식물 물주기 생육데이터|1개|
+        |2|대분류|화초(A), 관상수(B)|2종류|
+        |3|중분류|건생식물(1), 중생식물(2), ..., 수생식물(4)|4종류|
+        |4|소분류|스투키(01), 선인장(02), ... 디펜바키아(15)|15종류|
+        |5|장소|거실(L), 베란다(B)|2종류|
+        |6|세분류|건조(1), 일반(2), 과습(3)|3종류|
+        |7|촬영각도|Vertical(V), Horizontal(H)|2종류|
+        |8|수집날짜|2023년05월07일|--|
+        |9|일련번호|000001 ~ |--|
+        |10|파일형식|jpg, json|2종류|
+
+### 분할 데이터 구성 비율 및 모델별 상세 파일수
+- Train/Validation/Test 8:1:1
 
 #### 이미지분류 모델
 | LrgCat | MidCat | SmlCat    | classID | train  | val   | test  | total  |
@@ -30,7 +50,7 @@
 | B.관상수  | 2.중생식물 | 13.관음죽    | B-2-13  | 27560  | 3446  | 3445  | 34451  |
 | B.관상수  | 3.습생식물 | 14.벵갈고무나무 | B-3-14  | 27032  | 3380  | 3379  | 33791  |
 | B.관상수  | 3.습생식물 | 15.디펜바키아  | B-3-15  | 24253  | 3032  | 3032  | 30317  |
-| --     | --     | --        | --      | 396282 | 49541 | 49536 | 495359 |
+| ---      | ---       | ---           | ---      | 396282 | 49541 | 49536 | 495359 |
 
 #### 생장예측 모델
 | LrgCat | MidCat | SmlCat    | classID | train  | val   | test  | total  |
@@ -50,7 +70,7 @@
 | B.관상수  | 2.중생식물 | 13.관음죽    | B-2-13  | 34451  | 0     | 0     | 34451  |
 | B.관상수  | 3.습생식물 | 14.벵갈고무나무 | B-3-14  | 28160  | 5631  | 0     | 33791  |
 | B.관상수  | 3.습생식물 | 15.디펜바키아  | B-3-15  | 30317  | 0     | 0     | 30317  |
-| --     | --     | --        | --      | 400715 | 42758 | 51886 | 495359 |
+| ---      | ---       | ---           | ---      | 400715 | 42758 | 51886 | 495359 |
 
 
 ### 폴더 구성
@@ -179,32 +199,35 @@
     ├── /app
     │   ├── classify_test.py
     │   ├── classify_train.py
-    │   ├── collect_info.sh
-    │   ├── data_split811.py
-    │   ├── my_functions.py
     │   ├── plant_prediction_test.py
-    │   └── plant_prediction_train.py
+    │   ├── plant_prediction_train.py
+    │   ├── collect_info.sh
+    │   └── data_split811.py
     └── /mnt
-    ├── dataset
-    │   └── ...
-    └── output
-        ├── img_model_2024-01-09.h5
-        └── 2023-12-30_prediction_model.abc
+        ├── dataset
+        │   ├── 생장예측
+        │   │   └── ...
+        │   └── 이미지분류
+        │       ├── train
+        │       ├── val
+        │       └── test
+        └── output
+            ├── img_model_2024-01-09.h5
+            └── 2023-12-29_prediction_model.abc
     ```
 
 - 파일별 세부 용도는 다음과 같다
 
-    |파일명|쓰임새|비고|
-    |--|--|--|
-    |classify_test.py|식물 이미지분류모델 성능 측정|/mnt/output경로의 가중치 및 test set 필요|
-    |classify_train.py|식물 이미지분류모델 학습|/mnt/output경로에 가중치 저장. train 및 validation set 필요|
-    |collect_info.sh|하드웨어정보 출력파일|-|
-    |data_split811.py|식물 이미지분류모델 데이터분할한 코드로써 분류기준 참고가능|-|
-    |my_functions.py|각종 함수 저장|-|
-    |plant_prediction_test.py|식물 생장예측모델 성능 측정|/mnt/output경로의 가중치 및 test set 필요|
-    |plant_prediction_train.py|식물 생장예측모델 학습|/mnt/output경로에 가중치 저장. train 및 validation set 필요|
-    |img_model_2024-01-09.h5|식물 이미지분류모델의 학습완료된 가중치|학습소스 실행시 생성|
-    |2023-12-30_prediction_model.abc|식물 생장예측모델의 학습완료된 가중치|학습소스 실행시 생성|
+    |파일명|쓰임새|비고|순서|
+    |--|--|--|--|
+    |classify_train.py|식물 이미지분류모델 학습|/mnt/output경로에 가중치 저장</br>/mnt/dataset내 train/ 및 val/ 필요|1-1|
+    |img_model_2024-01-09.h5|식물 이미지분류모델의 학습완료된 가중치|classify_train.py 실행 종료시</br>/mnt/output/내에 생성|1-2|
+    |classify_test.py|식물 이미지분류모델 성능 측정|/mnt/output경로의 가중치 및</br>/mnt/dataset/test/ 필요|1-3|
+    |plant_prediction_train.py|식물 생장예측모델 학습|/mnt/output경로에 가중치 저장</br>/mnt/dataset내 train/ 및 val/ 필요|2-1|
+    |2023-12-29_prediction_model.abc|식물 생장예측모델의 학습완료된 가중치|plant_prediction_train.py 실행 종료시</br>/mnt/output/내에 생성|2-2|
+    |plant_prediction_test.py|식물 생장예측모델 성능 측정|/mnt/output경로의 가중치 및</br>/mnt/dataset/test/ 필요|2-3|
+    |collect_info.sh|하드웨어정보 출력파일|실행 필요 없음|---|
+    |data_split811.py|식물 이미지분류모델 데이터분할한 코드로써 분류기준 참고가능|실행 필요 없음|---|
 
 
 -----------------------------------------------------------------------------
@@ -235,8 +258,7 @@
 
 
 ### 환경 구축 방법
-
-- Dockerfile 과 docker-compose.yaml 파일을 기반하여 직접 이미지를 생성
+- Dockerfile 과 docker-compose.yaml 파일에 기반하여 직접 이미지를 생성
 
 #### 1. 데이터셋 등 마운트 경로 설정
 - docker-compose.yml 파일내에 마운트하고자 하는 로컬경로 수정
@@ -249,6 +271,17 @@
             - <컨테이너 내에서 사용할 실데이터가 있는 로컬경로>:/mnt/dataset
         ...
     ```
+- 예시 : 아래의 경우 <컨테이너 내에서 사용할 실데이터가 있는 로컬경로>는 /path/to/dataset 이다.
+    ```
+    /path/to/dataset
+                ├── 생장예측
+                └── 이미지분류
+                    ├── train
+                    ├── val
+                    └── test
+                        ├── 라벨링데이터
+                        └── 이미지데이터
+    ```
 
 #### 2. 이미지 생성 및 컨테이너 구동
 - docker-compose.yml 이 있는 경로로 이동 후 다음 명령어 실행
@@ -260,7 +293,8 @@
 - 구동중인 컨테이너명을 확인하여 작성
     ```bash
     # 출력물 중 NAMES 확인
-    docker ps -f name=horticulture
+    docker ps -f name=horticulture_container
+
     # 해당 내용을 아래에 기입(예:horticulture_container)
     docker exec -it horticulture_container bash
     ```
@@ -268,9 +302,18 @@
 #### 4. 소스코드 실행
 - 접속한 컨테이너의 CLI(터미널)로 실행하고자 하는 소스코드 실행
     ```bash
-    # 식물이미지분류모델 검증 코드 실행예시
+    # 식물이미지분류모델 학습 및 검증 코드 실행예시
+    python classify_train.py
     python classify_test.py
+
+    # 식물생장예측모델 학습 및 검증 코드 실행예시
+    python plant_prediction_train.py
+    python plant_prediction_test.py
     ```
+- 학습코드 실행시 `<컨테이너 내에서 생성된 산출물을 확인할 로컬경로>` 경로에 가중치가 저장됨
+- 제공된 모델 파일에 대해 검증 코드를 실행하고자 할 때에는 상기 경로에 해당 파일을 먼저 옮김
+    - img_model_2024-01-09.h5
+    - 2023-12-29_prediction_model.abc
 
 #### (참고)tensorflow gpu 인식 확인방법
 - 정보출력방법 : (컨테이너내) 커맨드라인에서 `python`입력 후 다음을 입력. (예시 출력값 참고) 
@@ -285,64 +328,85 @@
     print("Num GPUs Available: ", len(tf.config.list_physical_devices('GPU')))
     print(tf.test.is_built_with_cuda())
     # 예시 출력값
-    Num GPUs Available: 1
+    Num GPUs Available: 4
     True
     ```
 
 -----------------------------------------------------------------------------
 
-## 도커(.tar) 사용방법
+## 도커(.tar) 사용한 모델 검증 방법
 - Dockerfile 을 기반하여 생성된 .tar파일을 `docker load`를 통해 docker image를 로드하여 미리 구축된 환경내에서 작업
+    - 본 절차는 모델학습이 아니라 제공된 학습완료 가중치의 성능검증 재현을 위한것임
+- 모델별 명령어는 다소 차이가 있으나, 절차는 다음과 동일하다.
+    1. 압축파일(.tar)경로로 이동 후 도커 이미지 로드
+    1. 도커 컨테이너 실행 및 접속
+    1. 검증코드 실행
 
-#### 1. 이미지 로드하기
-- 우선 .tar가 있는 경로로 이동후 다음 명령어 실행
-    ```bash
-    # tarfile로 이미지 로드(좀걸림)
-    docker load -i ./nia50-jpg2.tar
-    ```
+### 생장예측 모델 검증
+```bash
+#### 1. 우선 .tar가 있는 경로로 이동후 다음 명령어 실행
+# tarfile로 이미지 로드(좀걸림)
+docker load -i ./nia50-json.tar
 
-#### 2. 컨테이너 구동 및 접속
-- 이미지 로드가 잘 되었으면 `docker images | grep nia` 를 이용하여 확인 가능
-    ```bash
-    # 명령어 작성방법
-    docker run -it \
-        -v <컨테이너 내에서 실행할 소스코드가 있는 로컬경로>:/app
-        -v <컨테이너 내에서 생성된 산출물을 확인할 로컬경로>:/mnt/output
-        -v <컨테이너 내에서 사용할 실데이터가 있는 로컬경로>:/mnt/dataset
-        --gpus all \
-        --name nia50-test \
-        nia50-jpg:2.0 bash
 
-    # 명령어 작성예시
-    docker run -it \
-        -v ./src:/app
-        -v /home/gocp/mnt/final_output:/mnt/output \
-        -v /home/gocp/mnt/final:/mnt/dataset \
-        --gpus all \
-        --name nia50-test \
-        nia50-jpg:2.0 bash
-    ```
+#### 2. 컨테이너 실행 후 진입
+# 명령어 작성방법
+docker run -it \
+    -v <산출물확인 경로>:/mnt/output \
+    -v <시험용데이터셋 경로>:/mnt/dataset \
+    --gpus all \
+    --name nia50-json-test \
+    nia50-json:1.0 bash
 
-#### 3. 소스코드 실행
-- 접속한 컨테이너의 CLI(터미널)로 실행하고자 하는 소스코드 실행
-    ```bash
-    # 식물이미지분류모델 검증 코드 실행예시
-    python classify_test.py
-    ```
+# 명령어 작성예시
+docker run -it \
+    -v /mnt/nia50/final_output:/mnt/output \
+    -v /mnt/nia50/final/생장예측/test/라벨링데이터:/mnt/dataset \
+    --gpus all \
+    --name nia50-json-test \
+    nia50-json:1.0 bash
 
-#### (참고) 유용한 명령어
-- docker 관련 명령어
-    ```bash
-    # 로드된 이미지 확인
-    docker images
 
-    # 도커 컨테이너 확인
-    docker ps -a -f name=nia50
+#### 3. 컨테이너 터미널 안에서 소스코드 파일 실행
+# 식물 생장예측모델 검증 코드 실행예시
+python plant_prediction_test.py
+```
 
-    # 도커 컨테이너 삭제
-    docker rm <컨테이너명 또는 CONTAINER ID>
-    ```
+### 이미지분류 모델 검증
+```bash
+#### 1. 우선 .tar가 있는 경로로 이동후 다음 명령어 실행
+# tarfile로 이미지 로드(좀걸림)
+docker load -i ./nia50-jpg2.tar
 
+
+#### 2. 컨테이너 실행 후 진입
+# 명령어 작성방법
+docker run -it \
+    -v <산출물확인 경로>:/mnt/output \
+    -v <이미지데이터 경로>:/mnt/dataset/이미지분류/test/이미지데이터 \
+    -v <라벨링데이터 경로>:/mnt/dataset/이미지분류/test/라벨링데이터 \
+    --gpus all \
+    --name nia50-test \
+    nia50-jpg:2.0 bash
+
+# 명령어 작성예시
+docker run -it \
+    -v /mnt/nia50/final_output:/mnt/output \
+    -v /mnt/nia50/final/이미지분류/test/이미지데이터:/mnt/dataset/이미지분류/test/이미지데이터 \
+    -v /mnt/nia50/final/이미지분류/test/라벨링데이터:/mnt/dataset/이미지분류/test/라벨링데이터 \
+    --gpus all \
+    --name nia50-test \
+    nia50-jpg:2.0 bash
+
+
+#### 3. 컨테이너 터미널 안에서 소스코드 파일 실행
+# 식물이미지분류모델 검증 코드 실행예시
+python classify_test.py
+```
+
+
+---
+- 깃허브주소 https://github.com/y0ngma/horticulture
 
 ## License
 Copyright (c) 2023 Gnewsoft SPDX-License-Identifier: MIT
