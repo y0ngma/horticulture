@@ -6,7 +6,6 @@
 1. [구축데이터정보](#구축데이터정보)
 1. [모델사용설명서](#모델사용설명서)
 1. [환경설치가이드](#환경설치가이드)
-1. [도커(.tar)사용방법](#도커사용방법)
 1. [라이센스 정보](#License)
 
 -----------------------------------------------------------------------------
@@ -333,79 +332,6 @@
     ```
 
 -----------------------------------------------------------------------------
-
-## 도커(.tar) 사용한 모델 검증 방법
-- Dockerfile 을 기반하여 생성된 .tar파일을 `docker load`를 통해 docker image를 로드하여 미리 구축된 환경내에서 작업
-    - 본 절차는 모델학습이 아니라 제공된 학습완료 가중치의 성능검증 재현을 위한것임
-- 모델별 명령어는 다소 차이가 있으나, 절차는 다음과 동일하다.
-    1. 압축파일(.tar)경로로 이동 후 도커 이미지 로드
-    1. 도커 컨테이너 실행 및 접속
-    1. 검증코드 실행
-
-### 생장예측 모델 검증
-```bash
-#### 1. 우선 .tar가 있는 경로로 이동후 다음 명령어 실행
-# tarfile로 이미지 로드(좀걸림)
-docker load -i ./nia50-json.tar
-
-
-#### 2. 컨테이너 실행 후 진입
-# 명령어 작성방법
-docker run -it \
-    -v <산출물확인 경로>:/mnt/output \
-    -v <시험용데이터셋 경로>:/mnt/dataset \
-    --gpus all \
-    --name nia50-json-test \
-    nia50-json:1.0 bash
-
-# 명령어 작성예시
-docker run -it \
-    -v /mnt/nia50/final_output:/mnt/output \
-    -v /mnt/nia50/final/생장예측/test/라벨링데이터:/mnt/dataset \
-    --gpus all \
-    --name nia50-json-test \
-    nia50-json:1.0 bash
-
-
-#### 3. 컨테이너 터미널 안에서 소스코드 파일 실행
-# 식물 생장예측모델 검증 코드 실행예시
-python plant_prediction_test.py
-```
-
-### 이미지분류 모델 검증
-```bash
-#### 1. 우선 .tar가 있는 경로로 이동후 다음 명령어 실행
-# tarfile로 이미지 로드(좀걸림)
-docker load -i ./nia50-jpg2.tar
-
-
-#### 2. 컨테이너 실행 후 진입
-# 명령어 작성방법
-docker run -it \
-    -v <산출물확인 경로>:/mnt/output \
-    -v <이미지데이터 경로>:/mnt/dataset/이미지분류/test/이미지데이터 \
-    -v <라벨링데이터 경로>:/mnt/dataset/이미지분류/test/라벨링데이터 \
-    --gpus all \
-    --name nia50-test \
-    nia50-jpg:2.0 bash
-
-# 명령어 작성예시
-docker run -it \
-    -v /mnt/nia50/final_output:/mnt/output \
-    -v /mnt/nia50/final/이미지분류/test/이미지데이터:/mnt/dataset/이미지분류/test/이미지데이터 \
-    -v /mnt/nia50/final/이미지분류/test/라벨링데이터:/mnt/dataset/이미지분류/test/라벨링데이터 \
-    --gpus all \
-    --name nia50-test \
-    nia50-jpg:2.0 bash
-
-
-#### 3. 컨테이너 터미널 안에서 소스코드 파일 실행
-# 식물이미지분류모델 검증 코드 실행예시
-python classify_test.py
-```
-
-
----
 - 깃허브주소 https://github.com/y0ngma/horticulture
 
 ## License
