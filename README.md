@@ -407,6 +407,14 @@
 - 제공된 모델 파일에 대해 검증 코드를 실행하고자 할 때에는 상기 경로에 해당 파일을 먼저 옮김
     - img_model_2024-01-09.h5
     - 2023-12-29_prediction_model.abc
+    - 이후 실행명령어는 다음과 같다.
+    ```bash
+    # 식물이미지분류모델 검증 코드 실행예시
+    python classify_test.py --model_name img_model_2024-01-09.h5
+
+    # 식물생장예측모델 검증 코드 실행예시
+    python plant_prediction_test.py --model_name 2023-12-29_prediction_model.abc
+    ```
 
 #### (참고)tensorflow gpu 인식 확인방법
 - 정보출력방법 : (컨테이너내) 커맨드라인에서 `python`입력 후 다음을 입력. (예시 출력값 참고) 
