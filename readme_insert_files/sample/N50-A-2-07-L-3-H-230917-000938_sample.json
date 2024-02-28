@@ -1,0 +1,65 @@
+{
+    "info": {
+        "GetDateTime": "202309171804",
+        "ClassID": "A-2-07-L-3",
+        "ResultOfGrowthLevel": "High",
+        "Place": "거실(L)",
+        "ImageCaption": "잎의 색깔이 초록색을 가지고 있는 스파티필럼이 화분에 담겨져 있으며, 네모난 인식표가 보입니다."
+    },
+    "plant": {
+        "PlantName": "스파티필럼",
+        "PlantClass": "중생식물",
+        "RootLength": {
+            "plant": "210",
+            "uproot": "209"
+        },
+        "SoilState": "습한흙",
+        "GrowthStage": "생장단계",
+        "Environment": "과습",
+        "PlantThickness":[{"date": "20230823", "thickness": "0.606"}, 
+                         {"date": "20230912", "thickness": "1.714"}],
+        "PlantHeight":   [{"date": "20230823", "height": "195.579"}, 
+                         {"date": "20230912", "height": "212.436"}]
+    },
+    "sensor": {
+        "AirTemperature": "31.7",
+        "Co2": "244",
+        "Quantum": "9",
+        "SupplyEC": "1.5",
+        "SupplyPH": "7",
+        "HighSoilTemp": "31.0",
+        "HighSoilHumi": "30.9",
+        "HighEC": "200.0",
+        "HighPH": "5.47",
+        "LowSoilTemp": "30.7",
+        "LowSoilHumi": "86.8",
+        "LowSoilEC": "222.0",
+        "LowSoilPH": "4.34",
+        "AirHumidity": "62.6"
+    },
+    "watering": {
+        "IrrigationState": "관수중",
+        "WateringTime": "202309171804",
+        "AmtIrrigation": "86"
+    },
+    "picInfo": {
+        "ImageType": "jpg",
+        "PhotographerID": "USERID",
+        "ImageTakeDT": "202309171804",
+        "ImageSize": "3965740",
+        "ImageName": "N50-A-2-07-L-3-H-230917-000938.jpg",
+        "FilmingLocation": "37.499035,127.025597",
+        "ShootingDistance": "26",
+        "ImageResolution": "2160 * 3840",
+        "ShootingAngle": "수평(H)"
+    },
+    "annotations": [{"plant_id": "A-2-07-L-3",
+                    "plant_name": "스파티필럼",
+                    "plant_polygon": [ 1110, 1624, 1080, 1612, 1061, 1040, 1586, 1093, 1638],
+                    "plant_polygonTitle": "lateralLeafLeft"},
+                    {"plant_id": "A-2-07-L-3",
+                    "plant_name": "스파티필럼",
+                    "plant_polygon": [ 1758, 1758, 1778, 1708, 1803, 1695, 1815, 1655, 1767],
+                    "plant_polygonTitle": "lateralLeafRight"}
+    ]
+}
